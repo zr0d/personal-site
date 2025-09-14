@@ -23,10 +23,10 @@ body {
   position: relative;
   z-index: 1;
   display: inline-block;
-  border: 2px solid #000080; /* classic XP-style border */
+  border: 2px solid #000080;
   border-radius: 5px;
   box-shadow: 4px 4px 10px rgba(0,0,0,0.7);
-  background: rgba(0, 0, 0, 0.7); /* semi-transparent for readability */
+  background: rgba(0, 0, 0, 0.7);
 }
 
 /* XP-style title bar */
@@ -59,7 +59,7 @@ body {
   padding: 20px 40px;
 }
 
-/* --- Typewriter effect --- */
+/* Typewriter effect */
 h1 {
   font-size: 2.5em;
   margin-bottom: 40px;
@@ -126,14 +126,11 @@ h1 {
   text-decoration: underline;
 }
 
-/* --- Popup window styles --- */
+/* Popup window styles */
 .popup {
   position: fixed;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 70%;
+  width: 500px;   
+  height: 500px;  
   background: black;
   border: 2px solid limegreen;
   box-shadow: 0 0 15px limegreen;
@@ -152,6 +149,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
+  cursor: move; /* indicate draggable */
 }
 
 .popup-header button {
@@ -169,7 +167,7 @@ h1 {
   background: white;
 }
 
-/* --- Fade-in + slide-up animation --- */
+/* Fade-in + slide-up animation */
 .fade-in-up {
   animation: fadeUp 0.5s ease forwards;
 }
@@ -177,10 +175,10 @@ h1 {
 @keyframes fadeUp {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(30px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 }

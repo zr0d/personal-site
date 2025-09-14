@@ -10,8 +10,12 @@
       click.play();
     }
 
-    function openWindow(url, title) {
+    function openWindow(url, title, event) {
       playClick();
+
+      const icon = event.currentTarget;
+      const rect = icon.getBoundingClientRect();
+
       const win = document.createElement("div");
       win.className = "popup fade-in-up";
 
@@ -24,6 +28,50 @@
       `;
 
       document.body.appendChild(win);
+
+      const popupWidth = 300;
+      const popupHeight = 300;
+
+      let left = rect.left + rect.width / 2 - popupWidth / 2;
+      let top = rect.top + rect.height + 10;
+
+      if (left < 10) left = 10;
+      if (left + popupWidth > window.innerWidth - 10) left = window.innerWidth - popupWidth - 10;
+      if (top + popupHeight > window.innerHeight - 10) top = window.innerHeight - popupHeight - 10;
+
+      win.style.left = left + "px";
+      win.style.top = top + "px";
+
+      // --- Make popup draggable ---
+      const header = win.querySelector(".popup-header");
+      let offsetX = 0, offsetY = 0, isDragging = false;
+
+      header.addEventListener("mousedown", function(e) {
+        isDragging = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        win.style.transition = "none"; // remove animation while dragging
+      });
+
+      document.addEventListener("mousemove", function(e) {
+        if (!isDragging) return;
+        let newLeft = e.clientX - offsetX;
+        let newTop = e.clientY - offsetY;
+
+        // keep popup inside window bounds
+        if (newLeft < 0) newLeft = 0;
+        if (newTop < 0) newTop = 0;
+        if (newLeft + popupWidth > window.innerWidth) newLeft = window.innerWidth - popupWidth;
+        if (newTop + popupHeight > window.innerHeight) newTop = window.innerHeight - popupHeight;
+
+        win.style.left = newLeft + "px";
+        win.style.top = newTop + "px";
+      });
+
+      document.addEventListener("mouseup", function() {
+        isDragging = false;
+        win.style.transition = ""; // restore animation after drag
+      });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -48,7 +96,7 @@
       type();
     });
 
-    // Matrix rain background
+    // Matrix background
     window.onload = function() {
       const canvas = document.getElementById("matrix");
       const ctx = canvas.getContext("2d");
@@ -92,7 +140,6 @@
   <canvas id="matrix"></canvas>
 
   <div class="container">
-    <!-- XP-style title bar -->
     <div class="title-bar">
       <span class="title-text">zachpef's Site</span>
       <div class="title-buttons">
@@ -105,13 +152,13 @@
       <h1 id="typing"></h1>
 
       <div class="links hidden">
-        <a href="#" onclick="openWindow('https://discord.com','Discord'); return false;">
+        <a href="#" onclick="openWindow('https://discord.com','Discord', event); return false;">
           <img src="discord.png" alt="Discord">
         </a>
-        <a href="#" onclick="openWindow('https://store.steampowered.com','Steam'); return false;">
+        <a href="#" onclick="openWindow('https://store.steampowered.com','Steam', event); return false;">
           <img src="steam.png" alt="Steam">
         </a>
-        <a href="#" onclick="openWindow('https://www.aol.com','AOL'); return false;">
+        <a href="#" onclick="openWindow('https://www.aol.com','AOL', event); return false;">
           <img src="aol.png" alt="AOL">
         </a>
       </div>
@@ -121,10 +168,9 @@
         <p>
           Hey, I’m Zach (a.k.a. zachpef). I mess around with old-school tech, gaming, 
           and whatever else I find interesting. This site is my personal corner of the web. 
-          Expect retro vibes, random projects, and maybe some cool throwbacks.<br></br>
-		
-	  This site is still very much under construction so keep in mind some things might
-	  not work...
+          Expect retro vibes, random projects, and maybe some cool throwbacks.<br><br>
+          This site is still very much under construction so keep in mind some things might
+          not work...
         </p>
       </div>
     </div>
