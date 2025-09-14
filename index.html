@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>zachpef's site</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function playClick() {
+      const click = new Audio("click.mp3");
+      click.play();
+    }
+
+    function openWindow(url, title) {
+      playClick();
+      const win = document.createElement("div");
+      win.className = "popup fade-in-up";
+
+      win.innerHTML = `
+        <div class="popup-header">
+          <span>${title}</span>
+          <button onclick="this.parentElement.parentElement.remove()">X</button>
+        </div>
+        <iframe src="${url}" frameborder="0"></iframe>
+      `;
+
+      document.body.appendChild(win);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const text = "Welcome to zachpef's site";
+      const typingElement = document.getElementById("typing");
+      const links = document.querySelector(".links");
+      const about = document.querySelector(".about");
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          typingElement.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 100);
+        } else {
+          setTimeout(() => {
+            links.classList.add("visible");
+            about.classList.add("visible");
+          }, 500);
+        }
+      }
+      type();
+    });
+
+    // Matrix rain background
+    window.onload = function() {
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+      const fontSize = 16;
+      const columns = canvas.width / fontSize;
+      const drops = [];
+
+      for (let x = 0; x < columns; x++) {
+        drops[x] = Math.random() * canvas.height;
+      }
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters[Math.floor(Math.random() * letters.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 50);
+    };
+  </script>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="container">
+    <!-- XP-style title bar -->
+    <div class="title-bar">
+      <span class="title-text">zachpef's Site</span>
+      <div class="title-buttons">
+        <button class="minimize" onclick="alert('Minimize not implemented')">_</button>
+        <button class="close" onclick="alert('Close not implemented')">X</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 id="typing"></h1>
+
+      <div class="links hidden">
+        <a href="#" onclick="openWindow('https://discord.com','Discord'); return false;">
+          <img src="discord.png" alt="Discord">
+        </a>
+        <a href="#" onclick="openWindow('https://store.steampowered.com','Steam'); return false;">
+          <img src="steam.png" alt="Steam">
+        </a>
+        <a href="#" onclick="openWindow('https://www.aol.com','AOL'); return false;">
+          <img src="aol.png" alt="AOL">
+        </a>
+      </div>
+
+      <div class="about hidden">
+        <h2>About Me</h2>
+        <p>
+          Hey, I’m Zach (a.k.a. zachpef). I mess around with old-school tech, gaming, 
+          and whatever else I find interesting. This site is my personal corner of the web. 
+          Expect retro vibes, random projects, and maybe some cool throwbacks.<br></br>
+		
+	  This site is still very much under construction so keep in mind some things might
+	  not work...
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
