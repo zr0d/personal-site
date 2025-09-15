@@ -10,28 +10,114 @@
       click.play();
     }
 
-    function openWindow(url, title, event) {
+    function openWindow(title, event) {
       playClick();
-
       const icon = event.currentTarget;
       const rect = icon.getBoundingClientRect();
 
       const win = document.createElement("div");
       win.className = "popup fade-in-up";
 
+      let contentHTML = "";
+
+      // Discord popup
+      if (title === "Discord") {
+        contentHTML = `
+          <div class="discord-profile">
+            <div class="banner"></div>
+            <div class="profile-content">
+              <div class="profile-left">
+                <img src="profile.jpg" alt="Avatar" class="profile-avatar">
+                <div class="profile-name">
+                  <span class="username">tumbs</span>
+                  <span class="tag">.tumbsx</span>
+                </div>
+              </div>
+              <div class="profile-right">
+                <div class="profile-info">
+                  <p class="status">🟢 Online</p>
+                  <p class="bio">Bass music producer, Sound designer, audio engineer👽👾 tumbs</p>
+                  <div class="profile-buttons">
+                    <button class="add-friend">Add Friend</button>
+                    <button class="message">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Steam popup
+      else if (title === "Steam") {
+        contentHTML = `
+          <div class="steam-profile">
+            <div class="steam-header">
+              <img src="steam-avatar.jpg" class="steam-avatar">
+              <div>
+                <span class="steam-username">Zer0d</span>
+                <span class="steam-level">Lvl 25</span>
+              </div>
+            </div>
+            <div class="steam-recent">Recent Activity</div>
+            <div class="steam-game">
+              <img src="game1.jpg" alt="Game 1">
+              <span>VRChat — 950 hrs on record</span>
+            </div>
+            <div class="steam-game">
+              <img src="game2.jpg" alt="Game 2">
+              <span>RCTD — 0.9 hrs on record</span>
+            </div>
+            <div class="steam-game">
+	      <img src="game3.jpg" alt="Game 3">
+              <span>iRacing - 125 hrs on record</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // AOL popup
+      else if (title === "AOL") {
+        contentHTML = `
+          <div class="aol-buddy">
+            <div class="aol-top">
+              <label>Enter the screen name of the user you wish to get info about:</label>
+              <input type="text" value="zachpef">
+            </div>
+            <div class="aol-status">
+              <p>Warning Level: 0%</p>
+              <p>Online time: 22 minutes</p>
+            </div>
+            <div class="aol-bio">
+              <textarea readonly>
+Howdy! I am Zach or just Z for short! Good to meet you!
+You can also find me on Twitter, and discord!
+I am also on Crosstalk: zpflatt@protonmail.com
+
+Incase this project ever goes away. YUUR😎
+              </textarea>
+            </div>
+            <div class="aol-buttons">
+              <button><span class="icon">💬</span><span>IM</span></button>
+              <button><span class="icon">👥</span><span>Add Buddy</span></button>
+              <button><span class="icon">📖</span><span>Directory Info</span></button>
+            </div>
+          </div>
+        `;
+      }
+
       win.innerHTML = `
         <div class="popup-header">
           <span>${title}</span>
           <button onclick="this.parentElement.parentElement.remove()">X</button>
         </div>
-        <iframe src="${url}" frameborder="0"></iframe>
+        <div class="popup-content">${contentHTML}</div>
       `;
 
       document.body.appendChild(win);
 
-      const popupWidth = 300;
-      const popupHeight = 300;
-
+      const popupWidth = 400;
+      const popupHeight = 500;
       let left = rect.left + rect.width / 2 - popupWidth / 2;
       let top = rect.top + rect.height + 10;
 
@@ -42,7 +128,7 @@
       win.style.left = left + "px";
       win.style.top = top + "px";
 
-      // --- Make popup draggable ---
+      // Draggable
       const header = win.querySelector(".popup-header");
       let offsetX = 0, offsetY = 0, isDragging = false;
 
@@ -50,7 +136,7 @@
         isDragging = true;
         offsetX = e.clientX - win.offsetLeft;
         offsetY = e.clientY - win.offsetTop;
-        win.style.transition = "none"; // remove animation while dragging
+        win.style.transition = "none";
       });
 
       document.addEventListener("mousemove", function(e) {
@@ -58,7 +144,6 @@
         let newLeft = e.clientX - offsetX;
         let newTop = e.clientY - offsetY;
 
-        // keep popup inside window bounds
         if (newLeft < 0) newLeft = 0;
         if (newTop < 0) newTop = 0;
         if (newLeft + popupWidth > window.innerWidth) newLeft = window.innerWidth - popupWidth;
@@ -70,10 +155,11 @@
 
       document.addEventListener("mouseup", function() {
         isDragging = false;
-        win.style.transition = ""; // restore animation after drag
+        win.style.transition = "";
       });
     }
 
+    // Typewriter effect
     document.addEventListener("DOMContentLoaded", function() {
       const text = "Welcome to zachpef's site";
       const typingElement = document.getElementById("typing");
@@ -143,8 +229,8 @@
     <div class="title-bar">
       <span class="title-text">zachpef's Site</span>
       <div class="title-buttons">
-        <button class="minimize" onclick="alert('Minimize not implemented')">_</button>
-        <button class="close" onclick="alert('Close not implemented')">X</button>
+        <button class="minimize">_</button>
+        <button class="close">X</button>
       </div>
     </div>
 
@@ -152,13 +238,13 @@
       <h1 id="typing"></h1>
 
       <div class="links hidden">
-        <a href="#" onclick="openWindow('https://discord.com','Discord', event); return false;">
+        <a href="#" onclick="openWindow('Discord', event); return false;">
           <img src="discord.png" alt="Discord">
         </a>
-        <a href="#" onclick="openWindow('https://store.steampowered.com','Steam', event); return false;">
+        <a href="#" onclick="openWindow('Steam', event); return false;">
           <img src="steam.png" alt="Steam">
         </a>
-        <a href="#" onclick="openWindow('https://www.aol.com','AOL', event); return false;">
+        <a href="#" onclick="openWindow('AOL', event); return false;">
           <img src="aol.png" alt="AOL">
         </a>
       </div>

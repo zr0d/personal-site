@@ -1,3 +1,4 @@
+/* Matrix background */
 #matrix {
   position: fixed;
   top: 0;
@@ -129,8 +130,8 @@ h1 {
 /* Popup window styles */
 .popup {
   position: fixed;
-  width: 500px;   
-  height: 500px;  
+  width: 400px;
+  height: 500px;
   background: black;
   border: 2px solid limegreen;
   box-shadow: 0 0 15px limegreen;
@@ -149,7 +150,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  cursor: move; /* indicate draggable */
+  cursor: move;
 }
 
 .popup-header button {
@@ -161,10 +162,9 @@ h1 {
   padding: 2px 6px;
 }
 
-.popup iframe {
+.popup-content {
   flex: 1;
-  width: 100%;
-  background: white;
+  overflow: auto;
 }
 
 /* Fade-in + slide-up animation */
@@ -181,4 +181,258 @@ h1 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ---------- Discord ---------- */
+.discord-profile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.discord-profile .banner {
+  height: 120px;
+  background: url("banner.png") no-repeat center center;
+  background-size: cover;
+}
+
+.profile-content {
+  display: flex;
+  background: #0d0d0d;
+  padding: 10px 20px 20px 10px;
+  border-top: 1px solid #202225;
+  border-radius: 0 0 12px 12px;
+  flex: 1;
+}
+
+.profile-left {
+  flex: 0 0 auto;
+  margin-right: 15px;
+  position: relative;
+  top: -40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid black;
+}
+
+.profile-name {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.profile-name .username {
+  font-weight: bold;
+  color: #dcddde;
+  display: block;
+}
+
+.profile-name .tag {
+  color: #b9bbbe;
+  font-size: 0.85em;
+  display: block;
+}
+
+.profile-right {
+  flex: 1;
+}
+
+.profile-info {
+  text-align: left;
+  color: #dcddde;
+}
+
+.profile-info .status {
+  margin: 5px 0;
+  color: #3ba55d;
+}
+
+.profile-info .bio {
+  font-size: 0.9em;
+  margin: 10px 0 15px;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profile-buttons button {
+  background: #5865F2;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.profile-buttons button:hover {
+  background: #4752c4;
+}
+
+.profile-buttons .message {
+  background: #4f545c;
+}
+
+.profile-buttons .message:hover {
+  background: #3c3f45;
+}
+
+/* ---------- Steam ---------- */
+.steam-profile {
+  background: #171a21;
+  color: #c7d5e0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.steam-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.steam-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+.steam-username {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #66c0f4;
+}
+
+.steam-level {
+  background: #101822;
+  border: 1px solid #66c0f4;
+  color: #66c0f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
+
+.steam-recent {
+  margin-top: 10px;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+.steam-game {
+  display: flex;
+  align-items: center;
+  background: #101822;
+  margin-bottom: 8px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.steam-game img {
+  width: 80px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.steam-game span {
+  font-size: 0.9em;
+}
+
+/* ---------- AOL Buddy Info ---------- */
+.aol-buddy {
+  background: #f0f0f0;
+  color: black;
+  font-family: "Tahoma", sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.aol-top {
+  padding: 8px;
+  border-bottom: 1px solid #aaa;
+  font-size: 0.9em;
+}
+
+.aol-top label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.aol-top input {
+  width: 95%;
+  padding: 3px;
+  border: 1px inset #999;
+  font-size: 0.9em;
+}
+
+.aol-status {
+  padding: 5px 10px;
+  font-size: 0.8em;
+  color: #333;
+  border-bottom: 1px solid #aaa;
+}
+
+.aol-bio {
+  flex: 1;
+  padding: 8px;
+}
+
+.aol-bio textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  font-family: inherit;
+  font-size: 0.85em;
+  border: 1px inset #999;
+  background: white;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.aol-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px;
+  background: #dcdcdc;
+  border-top: 1px solid #aaa;
+}
+
+.aol-buttons button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75em;
+  font-family: Tahoma, sans-serif;
+  color: black;
+}
+
+.aol-buttons button .icon {
+  font-size: 1.4em;
+}
+
+.aol-buttons button:hover {
+  background: #e6e6e6;
+  border-radius: 3px;
 }
