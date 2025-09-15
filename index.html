@@ -1,265 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>zachpef's site</title>
+  <title>Zach’s Retro Web Corner</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-    function playClick() {
-      const click = new Audio("click.mp3");
-      click.play();
-    }
-
-    function openWindow(title, event) {
-      playClick();
-      const icon = event.currentTarget;
-      const rect = icon.getBoundingClientRect();
-
-      const win = document.createElement("div");
-      win.className = "popup fade-in-up";
-
-      let contentHTML = "";
-
-      // Discord popup
-      if (title === "Discord") {
-        contentHTML = `
-          <div class="discord-profile">
-            <div class="banner"></div>
-            <div class="profile-content">
-              <div class="profile-left">
-                <img src="profile.jpg" alt="Avatar" class="profile-avatar">
-                <div class="profile-name">
-                  <span class="username">tumbs</span>
-                  <span class="tag">.tumbsx</span>
-                </div>
-              </div>
-              <div class="profile-right">
-                <div class="profile-info">
-                  <p class="status">🟢 Online</p>
-                  <p class="bio">Bass music producer, Sound designer, audio engineer👽👾 tumbs</p>
-                  <div class="profile-buttons">
-                    <button class="add-friend">Add Friend</button>
-                    <button class="message">Message</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      // Steam popup
-      else if (title === "Steam") {
-        contentHTML = `
-          <div class="steam-profile">
-            <div class="steam-header">
-              <img src="steam-avatar.jpg" class="steam-avatar">
-              <div>
-                <span class="steam-username">Zer0d</span>
-                <span class="steam-level">Lvl 25</span>
-              </div>
-            </div>
-            <div class="steam-recent">Recent Activity</div>
-            <div class="steam-game">
-              <img src="game1.jpg" alt="Game 1">
-              <span>VRChat — 950 hrs on record</span>
-            </div>
-            <div class="steam-game">
-              <img src="game2.jpg" alt="Game 2">
-              <span>RCTD — 0.9 hrs on record</span>
-            </div>
-            <div class="steam-game">
-	      <img src="game3.jpg" alt="Game 3">
-              <span>iRacing - 125 hrs on record</span>
-            </div>
-          </div>
-        `;
-      }
-
-      // AOL popup
-      else if (title === "AOL") {
-        contentHTML = `
-          <div class="aol-buddy">
-            <div class="aol-top">
-              <label>Enter the screen name of the user you wish to get info about:</label>
-              <input type="text" value="zachpef">
-            </div>
-            <div class="aol-status">
-              <p>Warning Level: 0%</p>
-              <p>Online time: 22 minutes</p>
-            </div>
-            <div class="aol-bio">
-              <textarea readonly>
-Howdy! I am Zach or just Z for short! Good to meet you!
-You can also find me on Twitter, and discord!
-I am also on Crosstalk: zpflatt@protonmail.com
-
-Incase this project ever goes away. YUUR😎
-              </textarea>
-            </div>
-            <div class="aol-buttons">
-              <button><span class="icon">💬</span><span>IM</span></button>
-              <button><span class="icon">👥</span><span>Add Buddy</span></button>
-              <button><span class="icon">📖</span><span>Directory Info</span></button>
-            </div>
-          </div>
-        `;
-      }
-
-      win.innerHTML = `
-        <div class="popup-header">
-          <span>${title}</span>
-          <button onclick="this.parentElement.parentElement.remove()">X</button>
-        </div>
-        <div class="popup-content">${contentHTML}</div>
-      `;
-
-      document.body.appendChild(win);
-
-      const popupWidth = 400;
-      const popupHeight = 500;
-      let left = rect.left + rect.width / 2 - popupWidth / 2;
-      let top = rect.top + rect.height + 10;
-
-      if (left < 10) left = 10;
-      if (left + popupWidth > window.innerWidth - 10) left = window.innerWidth - popupWidth - 10;
-      if (top + popupHeight > window.innerHeight - 10) top = window.innerHeight - popupHeight - 10;
-
-      win.style.left = left + "px";
-      win.style.top = top + "px";
-
-      // Draggable
-      const header = win.querySelector(".popup-header");
-      let offsetX = 0, offsetY = 0, isDragging = false;
-
-      header.addEventListener("mousedown", function(e) {
-        isDragging = true;
-        offsetX = e.clientX - win.offsetLeft;
-        offsetY = e.clientY - win.offsetTop;
-        win.style.transition = "none";
-      });
-
-      document.addEventListener("mousemove", function(e) {
-        if (!isDragging) return;
-        let newLeft = e.clientX - offsetX;
-        let newTop = e.clientY - offsetY;
-
-        if (newLeft < 0) newLeft = 0;
-        if (newTop < 0) newTop = 0;
-        if (newLeft + popupWidth > window.innerWidth) newLeft = window.innerWidth - popupWidth;
-        if (newTop + popupHeight > window.innerHeight) newTop = window.innerHeight - popupHeight;
-
-        win.style.left = newLeft + "px";
-        win.style.top = newTop + "px";
-      });
-
-      document.addEventListener("mouseup", function() {
-        isDragging = false;
-        win.style.transition = "";
-      });
-    }
-
-    // Typewriter effect
-    document.addEventListener("DOMContentLoaded", function() {
-      const text = "Welcome to zachpef's site";
-      const typingElement = document.getElementById("typing");
-      const links = document.querySelector(".links");
-      const about = document.querySelector(".about");
-      let i = 0;
-
-      function type() {
-        if (i < text.length) {
-          typingElement.textContent += text.charAt(i);
-          i++;
-          setTimeout(type, 100);
-        } else {
-          setTimeout(() => {
-            links.classList.add("visible");
-            about.classList.add("visible");
-          }, 500);
-        }
-      }
-      type();
-    });
-
-    // Matrix background
-    window.onload = function() {
-      const canvas = document.getElementById("matrix");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-      const fontSize = 16;
-      const columns = canvas.width / fontSize;
-      const drops = [];
-
-      for (let x = 0; x < columns; x++) {
-        drops[x] = Math.random() * canvas.height;
-      }
-
-      function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#0F0";
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-          const text = letters[Math.floor(Math.random() * letters.length)];
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-
-          drops[i]++;
-        }
-      }
-
-      setInterval(draw, 50);
-    };
-  </script>
 </head>
-<body>
-  <canvas id="matrix"></canvas>
+<body background="background.gif">
 
-  <div class="container">
-    <div class="title-bar">
-      <span class="title-text">zachpef's Site</span>
-      <div class="title-buttons">
-        <button class="minimize">_</button>
-        <button class="close">X</button>
-      </div>
-    </div>
 
-    <div class="content">
-      <h1 id="typing"></h1>
+<img src="dvd.png" id="dvd-logo" alt="DVD Logo">
 
-      <div class="links hidden">
-        <a href="#" onclick="openWindow('Discord', event); return false;">
-          <img src="discord.png" alt="Discord">
-        </a>
-        <a href="#" onclick="openWindow('Steam', event); return false;">
-          <img src="steam.png" alt="Steam">
-        </a>
-        <a href="#" onclick="openWindow('AOL', event); return false;">
-          <img src="aol.png" alt="AOL">
-        </a>
-      </div>
 
-      <div class="about hidden">
-        <h2>About Me</h2>
-        <p>
-          Hey, I’m Zach (a.k.a. zachpef). I mess around with old-school tech, gaming, 
-          and whatever else I find interesting. This site is my personal corner of the web. 
-          Expect retro vibes, random projects, and maybe some cool throwbacks.<br><br>
-          This site is still very much under construction so keep in mind some things might
-          not work...
-        </p>
-      </div>
-    </div>
+  <div class="page-container">
+  		
+  <!-- Characters on left border -->
+  <div class="character-border left">
+    <img src="char1.gif" style="top:50px;">
+    <img src="char2.gif" style="top:250px;">
   </div>
+
+  <!-- Characters on right border -->
+  <div class="character-border right">
+    <img src="char3.gif" style="top:120px;">
+    <img src="char4.gif" style="top:400px;">
+  </div>
+
+    <!-- Header -->
+    <center>
+      <marquee behavior="alternate" scrollamount="6">
+        <h1>💾 Welcome to zachpefs room! 💾</h1>
+      </marquee>
+    </center>
+
+    <!-- Content Frame -->
+    <div class="content-frame">
+
+      <!-- Welcome gif -->
+      <center>
+        <img src="welcome.gif" alt="Welcome!" class="welcome-gif" />
+      </center>
+
+      <!-- Layout Table -->
+      <table width="100%" border="0" cellspacing="10">
+        <tr>
+          <!-- Sidebar -->
+          <td width="200" valign="top" bgcolor="#000080">
+            <center>
+              <font face="Comic Sans MS" size="3"><b>Navigation</b></font>
+            </center>
+
+            <div class="nav-buttons">
+              <a href="#about">About Me</a>
+              <a href="#projects">Projects</a>
+              <a href="#blog">Blog</a>
+              <a href="#guestbook">Guestbook</a>
+              <a href="#links">Cool Links</a>
+            </div>
+
+            <div class="blinkies-row">
+              <img src="madewithnotepad.gif" alt="Neocities Blinkie">
+              <img src="deletespotify2.png" alt="Guestbook Blinkie">
+              <img src="neocities.gif" alt="World Wide Web Blinkie">
+              <img src="www.gif" alt="Made with Notepad Blinkie">
+            </div>
+
+            <center>
+              <img src="counter.gif"><br>
+              <font size="2">You are visitor #000042</font>
+            </center>
+          </td>
+
+          <!-- Main Content -->
+          <td valign="top" bgcolor="#000000">
+
+            <!-- About Me -->
+            <div class="about-block" id="about">
+	    <hr>
+              <h2>About Me</h2>
+              <p>Howdy! Z here! Welcome to my lil hub thang. I plan on hosting some cool stuff here like projects im working on, blog posts / news about things im interested in, and some links to software i enjoy / commonly use</p>
+              <p>I love old-school tech, gaming, and making random projects. Expect nostalgia, blinkies, and lots of under construction vibes.</p>
+            </div>
+		<hr>
+
+            <!-- Blog -->
+            <div class="content-section" id="blog">
+              <h2>📝 Blog</h2>
+
+              <div class="blog-post">
+                <h3>📅 09/15/2025 - First Post!</h3>
+                <p>YUURR! Havnt had anything to add here yet but more to come!🚀</p>
+              </div>
+
+
+
+
+
+            <!-- Projects -->
+            <div class="content-section" id="projects">
+	    <hr>
+              <h2>📂 Projects</h2>
+              <p>Some of the things I tinker with:</p>
+              <ul>
+                <li>Working on creating my own 90s / 2000s cable TV simulator</li>
+                <li>Building random web experiments like this site</li>
+              </ul>
+		<hr>
+            </div>
+
+
+
+            <!-- Guestbook -->
+            <div class="content-section" id="guestbook">
+              <h2>📔 Guestbook</h2>
+              <p>Sign my guestbook and leave me a note, just like the old days of the web!</p>
+              <p><a href="#">→ Go to Guestbook</a></p>
+            </div>
+
+            <!-- Cool Links -->
+            <div class="content-section" id="links">
+              <h2>🌐 Cool Links</h2>
+              <ul>
+                <li><a href="https://neocities.org/">Neocities</a></li>
+                <li><a href="https://blinkies.cafe/">Blinkies Café</a></li>
+                <li><a href="#">Retro Game Mods</a></li>
+              </ul>
+            </div>
+
+          </td>
+        </tr>
+      </table>
+
+      <!-- Under Construction gif -->
+      <center>
+        <blink><font color="yellow" size="5">This site is under construction!!!</font></blink><br>
+        <img src="under-construction.gif" width="120">
+      </center>
+
+    </div> <!-- end content-frame -->
+
+    <!-- Footer -->
+    <center>
+      <hr>
+      <font size="2" face="Verdana">© 1998 Zach’s Web Corner | Hosted on GeoCities</font><br>
+      <img src="construction-bar.gif"><br><br>
+
+      <table border="1" cellspacing="0" cellpadding="6" bgcolor="#000080" width="500">
+        <tr>
+          <td align="center">
+            <font color="#FFFFFF" face="Verdana" size="2">
+              <<< This site is part of the <b>Totally Awesome 90s Web Ring!</b> >>><br><br>
+              [ <a href="#">Previous</a> | <a href="#">Next</a> | <a href="#">Random</a> | <a href="#">List Sites</a> ]
+            </font>
+          </td>
+        </tr>
+      </table>
+
+      <br>
+      <img src="best-viewed-netscape.gif" alt="Best viewed in Netscape Navigator">
+      <img src="ie4-optimized.gif" alt="Optimized for Internet Explorer 4.0"><br>
+      <img src="best-800x600.gif" alt="Best viewed at 800x600 resolution">
+    </center>
+
+  </div>
+<script src="script.js"></script>
+
 </body>
 </html>

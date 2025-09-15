@@ -1,438 +1,143 @@
-/* Matrix background */
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
 body {
-  margin: 0;
+  font-family: "Comic Sans MS", "Times New Roman", cursive;
   background-color: black;
-  color: limegreen;
-  font-family: "Courier New", monospace;
-  text-align: center;
-  padding-top: 100px;
-  position: relative;
-  z-index: 1;
-}
-
-.container {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  border: 2px solid #000080;
-  border-radius: 5px;
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.7);
-  background: rgba(0, 0, 0, 0.7);
-}
-
-/* XP-style title bar */
-.title-bar {
-  background: linear-gradient(to bottom, #000080, #0000a0);
   color: white;
-  padding: 5px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  border-bottom: 2px solid #000060;
+  margin: 0;
+  padding: 20px;
 }
 
-.title-text {
-  font-family: "Tahoma", sans-serif;
+.page-container {
+  position: relative; /* keeps the DVD inside */
 }
 
-.title-buttons button {
-  background: #c0c0c0;
-  border: 1px solid #808080;
-  width: 20px;
-  height: 20px;
-  margin-left: 2px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.content {
-  padding: 20px 40px;
-}
-
-/* Typewriter effect */
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 40px;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid limegreen;
-  display: inline-block;
-  animation: blink-caret 0.7s step-end infinite;
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: limegreen; }
-}
-
-.links,
-.about {
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-.visible {
-  opacity: 1;
-}
-
-.links {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-}
-
-.links a {
-  display: inline-block;
+#dvd-logo {
+  position: fixed;  /* fixed to the viewport, not container */
+  top: 50px;
+  left: 50px;
   width: 80px;
-  height: 80px;
+  height: auto;
+  pointer-events: none;
+  z-index: 9999; /* make sure it's above everything */
 }
 
-.links a img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.2s ease, filter 0.2s ease;
+/* Center page in a wide retro box */
+.page-container {
+  width: 900px;      /* wider */
+  margin: 0 auto;        /* center horizontally */
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border: 6px double #FF00FF; /* neon retro border */
 }
 
-.links a img:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 10px limegreen);
+h1 {
+  color: lime;
+  text-shadow: 2px 2px 4px purple;
 }
 
-.about {
-  margin-top: 50px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-  line-height: 1.5em;
-}
-
-.about h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8em;
+a {
+  color: #00FF00;
   text-decoration: underline;
 }
 
-/* Popup window styles */
-.popup {
-  position: fixed;
-  width: 400px;
-  height: 500px;
+a:hover {
+  background-color: yellow;
+  color: red;
+}
+
+blink {
+  animation: blinker 0.8s step-start infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+/* Blinkies column (vertical stack) */
+.blinkies-row {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  align-items: center;    /* center them horizontally */
+  gap: 6px;               /* space between each blinkie */
+}
+
+.blinkies-row img {
+  max-width: 150px;  /* don’t stretch, only shrink if needed */
+  height: auto;      /* keep original proportions */
+  border: 1px solid #00FF00;
   background: black;
-  border: 2px solid limegreen;
-  box-shadow: 0 0 15px limegreen;
+}
+
+.border-gifs {
+  position: fixed;
+  top: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  z-index: 1000;
-  opacity: 0;
-}
-
-.popup-header {
-  background: #003300;
-  color: limegreen;
-  padding: 5px 10px;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  cursor: move;
-}
-
-.popup-header button {
-  background: none;
-  border: 1px solid limegreen;
-  color: limegreen;
-  font-family: inherit;
-  cursor: pointer;
-  padding: 2px 6px;
-}
-
-.popup-content {
-  flex: 1;
-  overflow: auto;
-}
-
-/* Fade-in + slide-up animation */
-.fade-in-up {
-  animation: fadeUp 0.5s ease forwards;
-}
-
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ---------- Discord ---------- */
-.discord-profile {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.discord-profile .banner {
-  height: 120px;
-  background: url("banner.png") no-repeat center center;
-  background-size: cover;
-}
-
-.profile-content {
-  display: flex;
-  background: #0d0d0d;
-  padding: 10px 20px 20px 10px;
-  border-top: 1px solid #202225;
-  border-radius: 0 0 12px 12px;
-  flex: 1;
-}
-
-.profile-left {
-  flex: 0 0 auto;
-  margin-right: 15px;
-  position: relative;
-  top: -40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profile-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 4px solid black;
-}
-
-.profile-name {
-  text-align: center;
-  margin-top: 5px;
-}
-
-.profile-name .username {
-  font-weight: bold;
-  color: #dcddde;
-  display: block;
-}
-
-.profile-name .tag {
-  color: #b9bbbe;
-  font-size: 0.85em;
-  display: block;
-}
-
-.profile-right {
-  flex: 1;
-}
-
-.profile-info {
-  text-align: left;
-  color: #dcddde;
-}
-
-.profile-info .status {
-  margin: 5px 0;
-  color: #3ba55d;
-}
-
-.profile-info .bio {
-  font-size: 0.9em;
-  margin: 10px 0 15px;
-}
-
-.profile-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.profile-buttons button {
-  background: #5865F2;
-  border: none;
-  border-radius: 4px;
-  padding: 6px 12px;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s ease;
-}
-
-.profile-buttons button:hover {
-  background: #4752c4;
-}
-
-.profile-buttons .message {
-  background: #4f545c;
-}
-
-.profile-buttons .message:hover {
-  background: #3c3f45;
-}
-
-/* ---------- Steam ---------- */
-.steam-profile {
-  background: #171a21;
-  color: #c7d5e0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-.steam-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.steam-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 4px;
-  margin-right: 15px;
-}
-
-.steam-username {
-  font-size: 1.4em;
-  font-weight: bold;
-  color: #66c0f4;
-}
-
-.steam-level {
-  background: #101822;
-  border: 1px solid #66c0f4;
-  color: #66c0f4;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  margin-left: 10px;
-}
-
-.steam-recent {
-  margin-top: 10px;
-  font-size: 1.1em;
-  margin-bottom: 8px;
-}
-
-.steam-game {
-  display: flex;
-  align-items: center;
-  background: #101822;
-  margin-bottom: 8px;
-  padding: 5px;
-  border-radius: 4px;
-}
-
-.steam-game img {
-  width: 80px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-.steam-game span {
-  font-size: 0.9em;
-}
-
-/* ---------- AOL Buddy Info ---------- */
-.aol-buddy {
-  background: #f0f0f0;
-  color: black;
-  font-family: "Tahoma", sans-serif;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.aol-top {
-  padding: 8px;
-  border-bottom: 1px solid #aaa;
-  font-size: 0.9em;
-}
-
-.aol-top label {
-  display: block;
-  margin-bottom: 4px;
-}
-
-.aol-top input {
-  width: 95%;
-  padding: 3px;
-  border: 1px inset #999;
-  font-size: 0.9em;
-}
-
-.aol-status {
-  padding: 5px 10px;
-  font-size: 0.8em;
-  color: #333;
-  border-bottom: 1px solid #aaa;
-}
-
-.aol-bio {
-  flex: 1;
-  padding: 8px;
-}
-
-.aol-bio textarea {
-  width: 100%;
-  height: 100%;
-  resize: none;
-  font-family: inherit;
-  font-size: 0.85em;
-  border: 1px inset #999;
-  background: white;
-  padding: 6px;
-  box-sizing: border-box;
-}
-
-.aol-buttons {
-  display: flex;
   justify-content: space-around;
-  padding: 8px;
-  background: #dcdcdc;
-  border-top: 1px solid #aaa;
+  z-index: 2000;
+}
+.border-gifs.left { left: 0; }
+.border-gifs.right { right: 0; }
+.border-gifs img {
+  width: 80px;  /* resize characters */
+  height: auto;
 }
 
-.aol-buttons button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 0.75em;
-  font-family: Tahoma, sans-serif;
-  color: black;
+
+.page-container {
+  position: relative;  /* <- important! gives a reference box */
 }
 
-.aol-buttons button .icon {
-  font-size: 1.4em;
+
+.character-border {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;   /* tighten so it fits the frame */
+  pointer-events: none;
 }
 
-.aol-buttons button:hover {
-  background: #e6e6e6;
-  border-radius: 3px;
+.character-border.left { left: -20px; }   /* nudge into purple border */
+.character-border.right { right: -20px; } /* nudge into purple border */
+
+.character-border img {
+  position: absolute;
+  width: 150px;/* smaller so they fit the frame */
+  height: auto;
+}
+
+
+/* About section block */
+.about-block {
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 700px;
+
+
+  text-align: center;
+  color: #FFFFFF;
+
+}
+
+.about-block h2 {
+  font-size: 1.8em;
+  color: #00FF00;
+  margin-bottom: 15px;
+  text-decoration: underline;
+}
+
+
+
+
+/* Webring banner links */
+table a {
+  color: #FFFF00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+table a:hover {
+  color: #FF0000;
+  background: #FFFF00;
 }
